@@ -104,7 +104,7 @@ Example:
 
 email-signature-generator.html
 
-For this repo though, I seperated it out for convenience. 
+If desired, the CSS and JavaScript can also be separated into their own files:
 
 index.html
 style.css
