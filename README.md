@@ -9,14 +9,6 @@ A lightweight, self-contained, vibe coded email signature generator built with H
 
 This project allows an organization to create a hidden or internal webpage where employees can enter their information and generate standardized email signatures. The page outputs both a full signature and a shorter reply signature that can be copied and pasted into Outlook or another email client.
 
-## Overview
-
-Many organizations want consistent email signatures but do not need a complicated paid signature management system. This project provides a simple webpage that can be added to a website, intranet, or internal resource page.
-
-Users fill out a form with their name, title, phone number, office location, and campus or organization location. The page then generates a formatted email signature using standardized branding, layout, and contact information.
-
-The project is designed to be easy to customize for universities, churches, nonprofits, businesses, and other organizations.
-
 ## Features
 
 * Self-contained HTML, CSS, and JavaScript
@@ -26,10 +18,10 @@ The project is designed to be easy to customize for universities, churches, nonp
 * Generates a full email signature
 * Generates a shorter reply signature
 * Copy-to-clipboard buttons
-* Optional branded image or theme graphic
+* Optional branded image or themed graphic
 * Phone number formatting
 * Required fields for consistent output
-* Campus/location dropdown support
+* Location dropdown support
 * Custom location option
 * Help article section for signature setup instructions
 * Table-based signature layout for better Outlook compatibility
@@ -80,7 +72,7 @@ Then update the image URL in the JavaScript:
 
 var THEME_IMAGE_URL = "https://www.example.edu/path-to-your-signature-image.png";
 
-Using a public image URL helps ensure that email clients can display the image after the signature is copied and pasted.
+Using a public image URL worked for me.. I don't know if that is the ideal long term solution however..
 
 Important: Some email clients may still block remote images by default depending on the recipient’s email settings.
 
@@ -104,34 +96,6 @@ That means each user is responsible for adding the generated signature to their 
 
 This project also does not automatically sync signatures across devices. A user may need to add the signature separately in multiple Outlook environments.
 
-## Recommended Use
-
-This project works well for:
-
-* Universities
-* Schools
-* Churches
-* Nonprofits
-* Small businesses
-* Departments
-* Internal teams
-* Organizations with multiple locations
-* Organizations that want consistent branding without a paid signature platform
-
-## Suggested Page Setup
-
-If the page is meant only for internal use, consider keeping it out of public navigation.
-
-Recommended options:
-
-* Place it on an intranet
-* Require login if possible
-* Hide it from site navigation
-* Set the page to noindex if your CMS allows it
-* Share the link directly with employees
-
-Do not rely on a hidden URL as a security measure. If the information or tool should be private, use proper access control.
-
 ## File Structure
 
 This project can be used as a single HTML file.
@@ -140,20 +104,14 @@ Example:
 
 email-signature-generator.html
 
-If desired, the CSS and JavaScript can also be separated into their own files:
+For this repo though, I seperated it out for convenience. 
 
 index.html
 style.css
 script.js
 
-However, the single-file version is useful for CMS pages where everything needs to live in one page body.
-
-## License
-
-This project may be used, modified, and adapted for your organization.
-
-Recommended license: MIT License
+However, the single-file version may prove useful for CMS pages where everything needs to live in one page body.
 
 ## Credits
 
-Originally created as a customizable email signature generator for higher education use, with the goal of helping organizations provide consistent, professional email signatures for employees.
+This was vibe coded and then tweaked for my specific use case. Do with it what you will. lol
