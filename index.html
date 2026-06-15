@@ -1,0 +1,926 @@
+<style>
+  /*
+    Email Signature Generator
+    All page styling is scoped to #email-signature-generator so this can be pasted into a CMS page.
+    Generated signatures use inline styles for better compatibility with Outlook and other email clients.
+  */
+  #email-signature-generator {
+    --sig-primary: #c8102e;
+    --sig-primary-dark: #a90d26;
+    --sig-black: #111111;
+    --sig-muted: #555555;
+    --sig-border: #d8d8d8;
+    --sig-soft-border: #ececec;
+    --sig-bg: #f7f7f8;
+    --sig-white: #ffffff;
+    box-sizing: border-box;
+    color: var(--sig-black);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.45;
+    margin: 0 auto;
+    max-width: 1180px;
+    padding: 28px 16px 48px;
+  }
+
+  #email-signature-generator *,
+  #email-signature-generator *::before,
+  #email-signature-generator *::after {
+    box-sizing: border-box;
+  }
+
+  #email-signature-generator h1,
+  #email-signature-generator h2,
+  #email-signature-generator h3,
+  #email-signature-generator p {
+    margin-top: 0;
+  }
+
+  #email-signature-generator h1 {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    line-height: 1.15;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  #email-signature-generator h2 {
+    font-size: 1.25rem;
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+
+  #email-signature-generator h3 {
+    font-size: 1rem;
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+
+  #email-signature-generator .sig-intro {
+    color: var(--sig-muted);
+    margin-bottom: 24px;
+    max-width: 820px;
+  }
+
+  #email-signature-generator .sig-intro-main {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  #email-signature-generator .sig-layout {
+    display: grid;
+    gap: 22px;
+    grid-template-columns: minmax(280px, 420px) minmax(320px, 1fr);
+  }
+
+  #email-signature-generator .sig-panel {
+    background: var(--sig-white);
+    border: 1px solid var(--sig-border);
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+    padding: 22px;
+  }
+
+  #email-signature-generator .sig-form-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #email-signature-generator .sig-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  #email-signature-generator .sig-field-full {
+    grid-column: 1 / -1;
+  }
+
+  #email-signature-generator label {
+    font-size: 0.92rem;
+    font-weight: 700;
+  }
+
+  #email-signature-generator .sig-optional {
+    color: var(--sig-muted);
+    font-weight: 400;
+  }
+
+  #email-signature-generator input,
+  #email-signature-generator select,
+  #email-signature-generator textarea {
+    background: #ffffff;
+    border: 1px solid var(--sig-border);
+    border-radius: 8px;
+    color: var(--sig-black);
+    font: inherit;
+    min-height: 44px;
+    padding: 10px 12px;
+    width: 100%;
+  }
+
+  #email-signature-generator textarea {
+    min-height: 78px;
+    resize: vertical;
+  }
+
+  #email-signature-generator input:focus,
+  #email-signature-generator select:focus,
+  #email-signature-generator textarea:focus,
+  #email-signature-generator button:focus,
+  #email-signature-generator a:focus {
+    outline: 3px solid rgba(200, 16, 46, 0.22);
+    outline-offset: 2px;
+  }
+
+  #email-signature-generator .sig-help-text {
+    color: var(--sig-muted);
+    font-size: 0.84rem;
+    line-height: 1.35;
+  }
+
+  #email-signature-generator .sig-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  #email-signature-generator button {
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    font-weight: 700;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px 14px;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+  }
+
+  #email-signature-generator button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  #email-signature-generator .sig-button-primary {
+    background: var(--sig-primary);
+    color: #ffffff;
+  }
+
+  #email-signature-generator .sig-button-primary:hover:not(:disabled) {
+    background: var(--sig-primary-dark);
+  }
+
+  #email-signature-generator .sig-button-secondary {
+    background: #ffffff;
+    border-color: var(--sig-border);
+    color: var(--sig-black);
+  }
+
+  #email-signature-generator .sig-button-secondary:hover:not(:disabled) {
+    background: var(--sig-bg);
+  }
+
+  #email-signature-generator .sig-preview-stack {
+    display: grid;
+    gap: 18px;
+  }
+
+  #email-signature-generator .sig-preview-card {
+    border: 1px solid var(--sig-soft-border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  #email-signature-generator .sig-preview-header {
+    align-items: center;
+    background: var(--sig-bg);
+    border-bottom: 1px solid var(--sig-soft-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 12px 14px;
+  }
+
+  #email-signature-generator .sig-preview-title {
+    font-weight: 700;
+  }
+
+  #email-signature-generator .sig-preview {
+    background: #ffffff;
+    min-height: 132px;
+    overflow-x: auto;
+    padding: 18px;
+  }
+
+  /*
+    Some sites may apply borders to all table elements.
+    Generated signatures are table-based for email-client compatibility, so this removes inherited borders inside previews only.
+  */
+  #email-signature-generator .sig-preview table,
+  #email-signature-generator .sig-preview tbody,
+  #email-signature-generator .sig-preview td,
+  #email-signature-generator .sig-preview tfoot,
+  #email-signature-generator .sig-preview th,
+  #email-signature-generator .sig-preview thead,
+  #email-signature-generator .sig-preview tr {
+    border: 0 !important;
+    border-bottom: 0 !important;
+    border-bottom-color: transparent !important;
+    border-bottom-style: none !important;
+    border-bottom-width: 0 !important;
+  }
+
+  #email-signature-generator .sig-status {
+    color: var(--sig-muted);
+    font-size: 0.9rem;
+    margin: 14px 0 0;
+    min-height: 1.3em;
+  }
+
+  #email-signature-generator .sig-help-links {
+    margin-top: 22px;
+  }
+
+  #email-signature-generator .sig-link-grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  #email-signature-generator .sig-link-grid a {
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid var(--sig-border);
+    border-radius: 8px;
+    color: var(--sig-black);
+    display: flex;
+    min-height: 44px;
+    padding: 10px 12px;
+    text-decoration: none;
+  }
+
+  #email-signature-generator .sig-link-grid a:hover {
+    border-color: var(--sig-primary);
+    color: var(--sig-primary);
+  }
+
+  #email-signature-generator .sig-text-center {
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    #email-signature-generator .sig-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    #email-signature-generator {
+      padding-inline: 12px;
+    }
+
+    #email-signature-generator .sig-panel {
+      padding: 16px;
+    }
+
+    #email-signature-generator .sig-form-grid,
+    #email-signature-generator .sig-link-grid {
+      grid-template-columns: 1fr;
+    }
+
+    #email-signature-generator .sig-preview-header {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    #email-signature-generator .sig-preview-header .sig-actions {
+      margin-top: 0;
+    }
+  }
+</style>
+
+
+<main aria-labelledby="sig-title" id="email-signature-generator">
+    <h1 id="sig-title">Email Signature Generator</h1>
+    <p class="sig-intro sig-intro-main">Complete the fields below, review your full and reply signatures, then use the copy buttons to paste each signature into your email client. Help articles are linked below the generator if you unsure how to update your email signature.</p>
+    <div class="sig-layout">
+        <section aria-labelledby="sig-form-title" class="sig-panel">
+            <h2 id="sig-form-title">Signature details</h2>
+            <form id="sigForm" novalidate="">
+                <div class="sig-form-grid">
+                    <div class="sig-field">
+                        <label for="sigPrefix">Prefix
+                            <br />
+                            <span class="sig-optional">optional</span>
+                        </label>
+                        <input autocomplete="honorific-prefix" id="sigPrefix" name="prefix" placeholder="Dr." type="text" />
+                    </div>
+                    <div class="sig-field">
+                        <label for="sigSuffix">Suffix / Credentials
+                            <br />
+                            <span class="sig-optional">optional</span>
+                        </label>
+                        <input id="sigSuffix" name="suffix" placeholder="Ph.D." type="text" />
+                    </div>
+                    <div class="sig-field">
+                        <label for="sigFirstName">First Name</label>
+                        <input autocomplete="given-name" id="sigFirstName" name="firstName" placeholder="John" required="" type="text" />
+                    </div>
+                    <div class="sig-field">
+                        <label for="sigLastName">Last Name</label>
+                        <input autocomplete="family-name" id="sigLastName" name="lastName" placeholder="Doe" required="" type="text" />
+                    </div>
+                    <div class="sig-field sig-field-full">
+                        <label for="sigTitleInput">Title</label>
+                        <input autocomplete="organization-title" id="sigTitleInput" name="title" placeholder="Director of Communications" required="" type="text" />
+                    </div>
+                    <div class="sig-field">
+                        <label for="sigPhone">Office Phone Number</label>
+                        <input aria-describedby="sigPhoneHelp" autocomplete="tel" id="sigPhone" inputmode="numeric" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="555-123-4567" required="" type="tel" />
+                        <div class="sig-help-text" id="sigPhoneHelp">Enter 10 digits. The page will format it as XXX-XXX-XXXX.</div>
+                    </div>
+                    <div class="sig-field">
+                        <label for="sigOffice">Office Location</label>
+                        <input id="sigOffice" name="office" placeholder="Main Office - Room 101" required="" type="text" />
+                    </div>
+                    <div class="sig-field sig-field-full">
+                        <label for="sigLocation">Organization Location</label>
+                        <select id="sigLocation" name="location" required="">
+                            <option value="">Select a location</option>
+                        </select>
+                    </div>
+                    <div class="sig-field sig-field-full" hidden="" id="sigCustomLocationWrap">
+                        <label for="sigCustomLocation">Custom Location Address</label>
+                        <textarea id="sigCustomLocation" name="customLocation" placeholder="Address as it should appear in the signature"></textarea>
+                        <div class="sig-help-text">The signature will display your organization name followed by this custom address.</div>
+                    </div>
+                </div>
+                <div class="sig-actions">
+                    <button class="sig-button-secondary" type="reset">Clear form</button>
+                </div>
+            </form>
+        </section>
+        <section aria-labelledby="sig-preview-title" class="sig-panel">
+            <h2 id="sig-preview-title">Generated signatures</h2>
+            <div class="sig-preview-stack">
+                <article aria-labelledby="sig-full-title" class="sig-preview-card">
+                    <div class="sig-preview-header">
+                        <div class="sig-preview-title" id="sig-full-title">Full signature</div>
+                        <div aria-label="Full signature actions" class="sig-actions">
+                            <button class="sig-button-primary" id="sigCopyFull" type="button">Copy full signature</button>
+                            <button class="sig-button-secondary" id="sigCopyFullText" type="button">Copy plain text</button>
+                        </div>
+                    </div>
+                    <div aria-label="Full signature preview" class="sig-preview" id="sigFullPreview" tabindex="0"></div>
+                </article>
+                <article aria-labelledby="sig-reply-title" class="sig-preview-card">
+                    <div class="sig-preview-header">
+                        <div class="sig-preview-title" id="sig-reply-title">Reply signature</div>
+                        <div aria-label="Reply signature actions" class="sig-actions">
+                            <button class="sig-button-primary" id="sigCopyReply" type="button">Copy reply signature</button>
+                            <button class="sig-button-secondary" id="sigCopyReplyText" type="button">Copy plain text</button>
+                        </div>
+                    </div>
+                    <div aria-label="Reply signature preview" class="sig-preview" id="sigReplyPreview" tabindex="0"></div>
+                </article>
+            </div>
+            <p aria-live="polite" class="sig-status" id="sigCopyStatus" role="status">&#160;</p>
+        </section>
+    </div>
+    <section aria-labelledby="sig-help-title" class="sig-panel sig-help-links">
+        <h2 class="sig-text-center" id="sig-help-title">Email signature help</h2>
+        <p class="sig-intro sig-intro-main">Use the article that matches your email environment. Paste the full signature for new messages and the reply signature for replies or forwards.</p>
+        <ul class="sig-link-grid">
+            <li>
+                <a href="https://support.microsoft.com/en-us/office/how-to-add-and-change-an-email-signature-in-outlook-8ee5d4f4-68fd-464a-a1c1-0e1c80bb27f2" rel="noopener" target="_blank">Outlook signature overview</a>
+            </li>
+            <li>
+                <a href="https://support.microsoft.com/en-us/office/sign-in-and-create-a-signature-for-outlook-on-the-web-676b32bc-b486-468d-b1f2-883569298b58" rel="noopener" target="_blank">Outlook on the web / new Outlook</a>
+            </li>
+            <li>
+                <a href="https://support.microsoft.com/en-us/office/create-signatures-and-automatic-replies-in-outlook-for-windows-1528addb-bd2e-43c5-86f6-d8de5ff13ae9" rel="noopener" target="_blank">Outlook for Windows</a>
+            </li>
+            <li>
+                <a href="https://support.microsoft.com/en-us/office/can-i-change-my-email-signature-b709384a-36a6-488a-b19f-0c49f9957209" rel="noopener" target="_blank">Outlook mobile app</a>
+            </li>
+        </ul>
+    </section>
+</main>
+
+
+
+<script>
+  (function () {
+    "use strict";
+
+    /*
+      SITE SETTINGS
+      Update these values before publishing the page.
+    */
+    var config = {
+      organizationName: "Example Organization",
+      organizationUrl: "https://www.example.org",
+      organizationDisplayUrl: "www.example.org",
+      brandColor: "#c8102e",
+      brandImageUrl: "", // Optional. Use a public HTTPS image URL to add a logo or campaign graphic to the full signature.
+      brandImageAlt: "Organization logo or campaign graphic",
+      brandImageWidth: 340,
+      replyFooterLineOne: "Your Organization Tagline",
+      replyFooterLineTwo: "Optional campaign message",
+      locations: {
+        main: {
+          label: "Main Location",
+          address: "123 Main Street, City, ST 12345"
+        },
+        secondary: {
+          label: "Secondary Location",
+          address: "456 Center Avenue, City, ST 12345"
+        },
+        remote: {
+          label: "Remote / Online",
+          address: "123 Main Street, City, ST 12345"
+        }
+      },
+      previewDefaults: {
+        firstName: "John",
+        lastName: "Doe",
+        title: "Director of Communications",
+        phone: "555-123-4567",
+        office: "Main Office - Room 101"
+      }
+    };
+
+    var els = {
+      form: document.getElementById("sigForm"),
+      prefix: document.getElementById("sigPrefix"),
+      suffix: document.getElementById("sigSuffix"),
+      firstName: document.getElementById("sigFirstName"),
+      lastName: document.getElementById("sigLastName"),
+      title: document.getElementById("sigTitleInput"),
+      phone: document.getElementById("sigPhone"),
+      office: document.getElementById("sigOffice"),
+      location: document.getElementById("sigLocation"),
+      customLocationWrap: document.getElementById("sigCustomLocationWrap"),
+      customLocation: document.getElementById("sigCustomLocation"),
+      fullPreview: document.getElementById("sigFullPreview"),
+      replyPreview: document.getElementById("sigReplyPreview"),
+      copyFull: document.getElementById("sigCopyFull"),
+      copyFullText: document.getElementById("sigCopyFullText"),
+      copyReply: document.getElementById("sigCopyReply"),
+      copyReplyText: document.getElementById("sigCopyReplyText"),
+      copyStatus: document.getElementById("sigCopyStatus")
+    };
+
+    var currentFullHtml = "";
+    var currentReplyHtml = "";
+    var currentFullText = "";
+    var currentReplyText = "";
+
+    function getValue(el) {
+      return (el && el.value ? el.value : "").trim().replace(/\s+/g, " ");
+    }
+
+    function getPhoneDigits(value) {
+      return String(value || "").replace(/\D/g, "");
+    }
+
+    function formatPhoneNumber(value) {
+      var digits = getPhoneDigits(value).slice(0, 10);
+
+      if (digits.length <= 3) {
+        return digits;
+      }
+
+      if (digits.length <= 6) {
+        return digits.slice(0, 3) + "-" + digits.slice(3);
+      }
+
+      return digits.slice(0, 3) + "-" + digits.slice(3, 6) + "-" + digits.slice(6);
+    }
+
+    function phoneHasTenDigits(value) {
+      return getPhoneDigits(value).length === 10;
+    }
+
+    function formatPhoneField() {
+      els.phone.value = formatPhoneNumber(els.phone.value);
+    }
+
+    function updatePhoneValidity() {
+      var digits = getPhoneDigits(els.phone.value);
+
+      if (digits.length > 0 && digits.length !== 10) {
+        els.phone.setCustomValidity("Enter a 10-digit phone number.");
+      } else {
+        els.phone.setCustomValidity("");
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function escapeAttr(value) {
+      return escapeHtml(value).replace(/`/g, "&#096;");
+    }
+
+    function hasBrandImage() {
+      return /^https:\/\//i.test(config.brandImageUrl);
+    }
+
+    function getLocationKeys() {
+      return Object.keys(config.locations || {});
+    }
+
+    function getFirstLocationKey() {
+      var keys = getLocationKeys();
+      return keys.length ? keys[0] : "";
+    }
+
+    function populateLocationOptions() {
+      var firstPlaceholder = els.location.querySelector('option[value=""]');
+      els.location.innerHTML = "";
+
+      if (firstPlaceholder) {
+        els.location.appendChild(firstPlaceholder);
+      }
+
+      getLocationKeys().forEach(function (key) {
+        var option = document.createElement("option");
+        option.value = key;
+        option.textContent = config.locations[key].label;
+        els.location.appendChild(option);
+      });
+
+      var customOption = document.createElement("option");
+      customOption.value = "custom";
+      customOption.textContent = "Other / Custom Address";
+      els.location.appendChild(customOption);
+    }
+
+    function formatName(prefix, firstName, lastName, suffix) {
+      var nameParts = [prefix, firstName, lastName].filter(Boolean);
+      var name = nameParts.join(" ");
+
+      if (suffix) {
+        name += (name ? ", " : "") + suffix;
+      }
+
+      return name;
+    }
+
+    function getLocationAddress(forPreview) {
+      var locationKey = els.location.value;
+
+      if (locationKey === "custom") {
+        var custom = getValue(els.customLocation);
+        return custom || (forPreview ? "Custom location address" : "");
+      }
+
+      if (!locationKey && forPreview) {
+        locationKey = getFirstLocationKey();
+      }
+
+      return config.locations[locationKey] ? config.locations[locationKey].address : "";
+    }
+
+    function getSignatureData(forPreview) {
+      var firstName = getValue(els.firstName);
+      var lastName = getValue(els.lastName);
+      var title = getValue(els.title);
+      var phone = formatPhoneNumber(getValue(els.phone));
+      var office = getValue(els.office);
+      var prefix = getValue(els.prefix);
+      var suffix = getValue(els.suffix);
+
+      if (forPreview) {
+        firstName = firstName || config.previewDefaults.firstName;
+        lastName = lastName || config.previewDefaults.lastName;
+        title = title || config.previewDefaults.title;
+        phone = phone || config.previewDefaults.phone;
+        office = office || config.previewDefaults.office;
+      }
+
+      return {
+        prefix: prefix,
+        firstName: firstName,
+        lastName: lastName,
+        suffix: suffix,
+        displayName: formatName(prefix, firstName, lastName, suffix),
+        title: title,
+        phone: phone,
+        office: office,
+        locationAddress: getLocationAddress(forPreview)
+      };
+    }
+
+    function buildContactLine(data) {
+      var parts = [];
+
+      if (data.phone) {
+        parts.push("Phone: " + data.phone);
+      }
+
+      if (data.office) {
+        parts.push("Office: " + data.office);
+      }
+
+      return parts.join(" | ");
+    }
+
+    function buildFullSignatureHtml(data) {
+      var contactLine = buildContactLine(data);
+      var rows = [];
+
+      rows.push(
+        '<tr><td style="padding:0 0 4px 0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:1.35; color:#111111;">' +
+        '<span style="font-weight:bold; color:' + escapeAttr(config.brandColor) + ';">' + escapeHtml(data.displayName) + '</span>' +
+        '</td></tr>'
+      );
+
+      if (data.title) {
+        rows.push(
+          '<tr><td style="padding:0 0 4px 0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:1.35; color:#111111;">' +
+          escapeHtml(data.title) +
+          '</td></tr>'
+        );
+      }
+
+      if (contactLine) {
+        rows.push(
+          '<tr><td style="padding:0 0 4px 0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:1.35; color:#111111;">' +
+          escapeHtml(contactLine) +
+          '</td></tr>'
+        );
+      }
+
+      if (config.organizationName || data.locationAddress) {
+        rows.push(
+          '<tr><td style="padding:0 0 4px 0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:1.35; color:#111111;">' +
+          (config.organizationName ? '<span style="font-weight:bold;">' + escapeHtml(config.organizationName) + '</span>' : '') +
+          (config.organizationName && data.locationAddress ? ' | ' : '') +
+          escapeHtml(data.locationAddress) +
+          '</td></tr>'
+        );
+      }
+
+      if (config.organizationUrl && config.organizationDisplayUrl) {
+        rows.push(
+          '<tr><td style="padding:0 0 18px 0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:1.35; color:#111111;">' +
+          '<a href="' + escapeAttr(config.organizationUrl) + '" style="color:#111111; text-decoration:none;">' + escapeHtml(config.organizationDisplayUrl) + '</a>' +
+          '</td></tr>'
+        );
+      }
+
+      if (hasBrandImage()) {
+        rows.push(
+          '<tr><td style="padding:8px 0 0 0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:1.35; color:#111111;">' +
+          '<img src="' + escapeAttr(config.brandImageUrl) + '" width="' + Number(config.brandImageWidth || 340) + '" alt="' + escapeAttr(config.brandImageAlt) + '" style="border:0; display:block; height:auto; max-width:' + Number(config.brandImageWidth || 340) + 'px; outline:none; text-decoration:none; width:' + Number(config.brandImageWidth || 340) + 'px;">' +
+          '</td></tr>'
+        );
+      }
+
+      return '<table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse; color:#111111; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:1.35; mso-line-height-rule:exactly;">' + rows.join("") + '</table>';
+    }
+
+    function buildReplySignatureHtml(data) {
+      var contactLine = buildContactLine(data);
+      var rows = [];
+
+      rows.push(
+        '<tr><td style="padding:0 0 4px 0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:1.35; color:#111111;">' +
+        '<span style="font-weight:bold; color:' + escapeAttr(config.brandColor) + ';">' + escapeHtml(data.displayName) + '</span>' +
+        '</td></tr>'
+      );
+
+      if (data.title) {
+        rows.push(
+          '<tr><td style="padding:0 0 4px 0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:1.35; color:#111111;">' +
+          escapeHtml(data.title) +
+          '</td></tr>'
+        );
+      }
+
+      if (contactLine) {
+        rows.push(
+          '<tr><td style="padding:0 0 18px 0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:1.35; color:#111111;">' +
+          escapeHtml(contactLine) +
+          '</td></tr>'
+        );
+      }
+
+      if (config.replyFooterLineOne) {
+        rows.push(
+          '<tr><td style="padding:0 0 2px 0; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:1.35; color:#111111;">' +
+          '<span style="font-style:italic; font-weight:bold; color:' + escapeAttr(config.brandColor) + ';">' + escapeHtml(config.replyFooterLineOne) + '</span>' +
+          '</td></tr>'
+        );
+      }
+
+      if (config.replyFooterLineTwo) {
+        rows.push(
+          '<tr><td style="padding:0; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:1.35; color:#111111;">' +
+          escapeHtml(config.replyFooterLineTwo) +
+          '</td></tr>'
+        );
+      }
+
+      return '<table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse; color:#111111; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:1.35; mso-line-height-rule:exactly;">' + rows.join("") + '</table>';
+    }
+
+    function buildFullPlainText(data) {
+      var lines = [];
+      var contactLine = buildContactLine(data);
+
+      if (data.displayName) lines.push(data.displayName);
+      if (data.title) lines.push(data.title);
+      if (contactLine) lines.push(contactLine);
+      if (config.organizationName || data.locationAddress) {
+        lines.push([config.organizationName, data.locationAddress].filter(Boolean).join(" | "));
+      }
+      if (config.organizationDisplayUrl) lines.push(config.organizationDisplayUrl);
+
+      return lines.join("\n");
+    }
+
+    function buildReplyPlainText(data) {
+      var lines = [];
+      var contactLine = buildContactLine(data);
+
+      if (data.displayName) lines.push(data.displayName);
+      if (data.title) lines.push(data.title);
+      if (contactLine) lines.push(contactLine);
+      if (config.replyFooterLineOne || config.replyFooterLineTwo) lines.push("");
+      if (config.replyFooterLineOne) lines.push(config.replyFooterLineOne);
+      if (config.replyFooterLineTwo) lines.push(config.replyFooterLineTwo);
+
+      return lines.join("\n");
+    }
+
+    function formIsReady() {
+      var data = getSignatureData(false);
+      return Boolean(data.firstName && data.lastName && data.title && phoneHasTenDigits(els.phone.value) && data.office && data.locationAddress);
+    }
+
+    function updateCustomLocationVisibility() {
+      var customSelected = els.location.value === "custom";
+      els.customLocationWrap.hidden = !customSelected;
+      els.customLocation.required = customSelected;
+
+      if (!customSelected) {
+        els.customLocation.value = "";
+      }
+    }
+
+    function updatePreviews() {
+      updatePhoneValidity();
+
+      var previewData = getSignatureData(true);
+      var copyData = getSignatureData(false);
+      var ready = formIsReady();
+
+      currentFullHtml = buildFullSignatureHtml(copyData);
+      currentReplyHtml = buildReplySignatureHtml(copyData);
+      currentFullText = buildFullPlainText(copyData);
+      currentReplyText = buildReplyPlainText(copyData);
+
+      els.fullPreview.innerHTML = buildFullSignatureHtml(previewData);
+      els.replyPreview.innerHTML = buildReplySignatureHtml(previewData);
+
+      els.copyFull.disabled = !ready;
+      els.copyFullText.disabled = !ready;
+      els.copyReply.disabled = !ready;
+      els.copyReplyText.disabled = !ready;
+
+      if (!ready) {
+        els.copyStatus.textContent = "Complete the required fields before copying a signature. Phone numbers must include exactly 10 digits.";
+      } else {
+        els.copyStatus.textContent = "Ready to copy.";
+      }
+    }
+
+    function selectAndCopyElement(element) {
+      var selection = window.getSelection();
+      var range = document.createRange();
+
+      range.selectNodeContents(element);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      var ok = document.execCommand("copy");
+      selection.removeAllRanges();
+
+      return ok;
+    }
+
+    async function copyRichHtml(html, plainText, fallbackElement, successMessage) {
+      if (!formIsReady()) {
+        els.copyStatus.textContent = "Please complete all required fields first. Phone numbers must include exactly 10 digits.";
+        return;
+      }
+
+      try {
+        if (navigator.clipboard && window.ClipboardItem && window.isSecureContext) {
+          var item = new ClipboardItem({
+            "text/html": new Blob([html], { type: "text/html" }),
+            "text/plain": new Blob([plainText], { type: "text/plain" })
+          });
+          await navigator.clipboard.write([item]);
+          els.copyStatus.textContent = successMessage;
+          return;
+        }
+
+        throw new Error("Rich clipboard unavailable");
+      } catch (error) {
+        try {
+          var copied = selectAndCopyElement(fallbackElement);
+          els.copyStatus.textContent = copied ? successMessage : "The browser blocked automatic copy. Select the preview and press Ctrl+C or Command+C.";
+        } catch (fallbackError) {
+          els.copyStatus.textContent = "The browser blocked automatic copy. Select the preview and press Ctrl+C or Command+C.";
+        }
+      }
+    }
+
+    async function copyPlainText(text, successMessage) {
+      if (!formIsReady()) {
+        els.copyStatus.textContent = "Please complete all required fields first. Phone numbers must include exactly 10 digits.";
+        return;
+      }
+
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          els.copyStatus.textContent = successMessage;
+          return;
+        }
+
+        throw new Error("Plain clipboard unavailable");
+      } catch (error) {
+        var temp = document.createElement("textarea");
+        temp.value = text;
+        temp.setAttribute("readonly", "");
+        temp.style.position = "fixed";
+        temp.style.left = "-9999px";
+        document.body.appendChild(temp);
+        temp.select();
+        var ok = document.execCommand("copy");
+        document.body.removeChild(temp);
+        els.copyStatus.textContent = ok ? successMessage : "The browser blocked automatic copy. Manually select the text and copy it.";
+      }
+    }
+
+    els.form.addEventListener("input", function (event) {
+      if (event.target === els.phone) {
+        formatPhoneField();
+      }
+
+      updatePreviews();
+    });
+
+    els.form.addEventListener("change", function () {
+      updateCustomLocationVisibility();
+      updatePreviews();
+    });
+
+    els.form.addEventListener("reset", function () {
+      window.setTimeout(function () {
+        updateCustomLocationVisibility();
+        updatePreviews();
+      }, 0);
+    });
+
+    els.copyFull.addEventListener("click", function () {
+      copyRichHtml(currentFullHtml, currentFullText, els.fullPreview, "Full signature copied. Paste it into your email signature editor.");
+    });
+
+    els.copyReply.addEventListener("click", function () {
+      copyRichHtml(currentReplyHtml, currentReplyText, els.replyPreview, "Reply signature copied. Paste it into your reply or forward signature field.");
+    });
+
+    els.copyFullText.addEventListener("click", function () {
+      copyPlainText(currentFullText, "Full signature plain text copied.");
+    });
+
+    els.copyReplyText.addEventListener("click", function () {
+      copyPlainText(currentReplyText, "Reply signature plain text copied.");
+    });
+
+    populateLocationOptions();
+    updateCustomLocationVisibility();
+    updatePreviews();
+  })();
+</script>
